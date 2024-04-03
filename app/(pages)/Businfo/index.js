@@ -13,9 +13,9 @@ const index = (navigation) => {
   const data = [
     { time: "09:00", title: "School", delay: "09:00" },
     { time: "09:10", title: "Pallimoola", delay: "09:15" },
-    { time: "09:17", title: "Cheroor", delay: "09:23" }, // No delay
+    { time: "09:17", title: "Cheroor", delay: "09:23" }, 
     { time: "09:28", title: "asdgfd", delay: "09:28" },
-    { time: "09:35", title: "zfgxhjg", delay: "09:34" }, // No delay
+    { time: "09:35", title: "zfgxhjg", delay: "09:34" }, 
   ];
 
   return (
