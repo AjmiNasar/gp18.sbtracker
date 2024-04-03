@@ -32,7 +32,7 @@ const open = () => {
          Track Your Bus Anytime
         </Text>
         <Pressable
-            onPress={() => router.replace("/login")}
+            onPress={() => router.navigate("/login")}
             style={{ marginTop: 15 }}
           >
             <Text style={{ textAlign: "center", fontSize: 15, color: "gray" }}>
@@ -40,7 +40,7 @@ const open = () => {
             </Text>
           </Pressable>
         <Pressable
-            onPress={() => router.replace("/register")}
+            onPress={() => router.navigate("/register")}
             style={{ marginTop: 15 }}
           >
             <Text style={{ textAlign: "center", fontSize: 15, color: "gray" }}>
