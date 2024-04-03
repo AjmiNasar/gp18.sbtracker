@@ -33,7 +33,7 @@ const index = () => {
         }}
       >
         <Pressable
-          onPress={() => router.replace("/(pages)/profile")}
+          onPress={() => router.navigate("/(pages)/profile")}
           style={{
             marginLeft: 15,
             paddingHorizontal: 10,
@@ -78,7 +78,7 @@ const index = () => {
             }}
           >
             <Pressable style={{ height: 50, color: "white" }}
-            onPress={() => router.replace("/(pages)/Businfo")}>
+            onPress={() => router.navigate("/(pages)/Businfo")}>
               <Text style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }}>Bus No 1</Text>
             </Pressable>
           </View>
