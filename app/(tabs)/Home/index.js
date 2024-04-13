@@ -1,5 +1,4 @@
 import {
-  NativeAppEventEmitter,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -8,17 +7,43 @@ import {
   TextInput,
 } from "react-native";
 import { Fontisto } from "@expo/vector-icons";
-import React from "react";
+import React,{useEffect,useState} from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { Redirect } from "expo-router";
+import axios from 'axios';
 
 const index = () => {
   const router = useRouter();
+  const [stops,setStops]=useState([])
+  const [busData,setbusData]=useState([]);
+  useEffect(()=>{
+    axios.get("https://09c8-2401-4900-332a-e697-4550-a036-ca21-ada5.ngrok-free.app/getbusdetailseve").then((response)=>
+    {setbusData(response.data)
+      // setAllstops(response.data)
+      // setAllstops(response.data.data)
+      const data=response.data.data[0].stops
+      data=response.data.data[0].stops 
+      console.log(data)
+      data.forEach((element) => {
+        setStops((prev)=>[...prev,element.name])
+      });
+
+  
+  
+  }).catch((err)=>console.log(err))
+  },[])
+  const passStops=(index)=>{
+    const req=allstops.data[index].stops
+    req.forEach((element) => {
+      setStops((prev)=>[...prev,element.name])
+    });
+    console.log(stops)
+}
   return (
     <>
       <View
@@ -30,6 +55,8 @@ const index = () => {
           height: 110,
           borderBottomEndRadius: 40,
           borderBottomStartRadius: 40,
+          display:"flex",
+          justifyContent:"space-between"
         }}
       >
         <Pressable
@@ -44,10 +71,11 @@ const index = () => {
         >
           <FontAwesome name="user-circle-o" size={34} color="black" />
         </Pressable>
-        <Text style={{ marginLeft: 10, color: "black", fontSize: 20 }}>
+        {/* <Text style={{ marginLeft: -2, color: "black", fontSize: 20 }}>
           Where is my
         </Text>
-        <Text style={{ color: "#F98B88", fontSize: 20 }}>School Bus</Text>
+        <Text style={{ color: "#F98B88", fontSize: 20 }}>School Bus</Text> */}
+        <Text style={{color: "black", fontSize: 20, marginRight:5}} onPress={()=>router.replace("/(authenticate)/open")}>Logout</Text>
       </View>
      
 
@@ -78,8 +106,16 @@ const index = () => {
             }}
           >
             <Pressable style={{ height: 50, color: "white" }}
+<<<<<<< Updated upstream
             onPress={() => router.navigate("/(pages)/Businfo")}>
               <Text style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }}>Bus No 1</Text>
+=======
+            >
+
+              <Link style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:0}}}>Bus No 1</Link>
+
+              
+>>>>>>> Stashed changes
             </Pressable>
           </View>
           <View
@@ -104,7 +140,10 @@ const index = () => {
             }}
           >
             <Pressable style={{ height: 50, color: "white" }}>
-              <Text style={{top:0, fontSize: 25, textAlign: "left",marginLeft:30 }}>Bus No 2</Text>
+
+              <Link style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:1}}}>Bus No 2</Link>
+
+            
             </Pressable>
           </View>
           <View
@@ -129,7 +168,10 @@ const index = () => {
             }}
           >
             <Pressable style={{ height: 50, color: "white" }}>
-              <Text style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }}>Bus No 3</Text>
+
+              <Link style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:2}}}>Bus No 3</Link>
+
+            
             </Pressable>
           </View>
         </View>
@@ -155,7 +197,10 @@ const index = () => {
             }}
           >
             <Pressable style={{ height: 50, color: "white" }}>
-              <Text style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }}>Bus No 4</Text>
+
+              <Link style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:3}}}>Bus No 4</Link>
+
+            
             </Pressable>
           </View>
         
@@ -181,7 +226,10 @@ const index = () => {
           }}
         >
           <Pressable style={{ height: 50, color: "white" }}>
-            <Text style={{top:0, fontSize: 25, textAlign: "left",marginLeft:30 }}>Bus No 5</Text>
+
+            <Link style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:4}}}>Bus No 5</Link>
+
+          
           </Pressable>
         </View>
       </ScrollView>

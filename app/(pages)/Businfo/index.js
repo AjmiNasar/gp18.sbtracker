@@ -1,21 +1,52 @@
 import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import Timeline from "react-native-timeline-flatlist";
+import {Link, useNavigation} from 'expo-router'
+import { useLocalSearchParams, useRouteInfo, useRouter } from "expo-router/build/hooks";
+import axios from 'axios';
 
 
 const index = (navigation) => {
+  const [stops,setStops]=useState([])
+  const params=useLocalSearchParams()
+  const busid=parseInt(params.id)+1
+
+  useEffect(()=>{
+    axios.get("https://09c8-2401-4900-332a-e697-4550-a036-ca21-ada5.ngrok-free.app/getbusdetailseve").then((response)=>
+    {
+      // setAllstops(response.data)
+      // setAllstops(response.data.data)
+      const data=response.data.data[params.id].stops 
+      console.log(data)
+      data.forEach((element) => {
+        setStops((prev)=>[...prev,element.name])
+      });
+
+  
+  
+  }).catch((err)=>console.log(err))
+  },[])
+
   var place = "";
   var time;
   var stop_name = "School";
   const data = [
     { time: "09:00", title: "School", delay: "09:00" },
+<<<<<<< Updated upstream
     { time: "09:10", title: "Pallimoola", delay: "09:15" },
     { time: "09:17", title: "Cheroor", delay: "09:23" }, 
     { time: "09:28", title: "asdgfd", delay: "09:28" },
     { time: "09:35", title: "zfgxhjg", delay: "09:34" }, 
+=======
+    { time: "09:10", title: stops[0], delay: "09:15" },
+    { time: "09:17", title: stops[1], delay: "09:23" }, // No delay
+    { time: "09:28", title: stops[2], delay: "09:28" },
+    { time: "09:35", title: stops[3], delay: "09:34" }, // No delay
+    { time: "09:45", title: stops[4], delay: "09:46" }, // No delay
+>>>>>>> Stashed changes
   ];
 
   return (
@@ -76,7 +107,7 @@ const index = (navigation) => {
           elevation: 10,
         }}
       >
-        <Text style={{ color: "red" }}>Bus No 1</Text>
+        <Text style={{ color: "red" }}>Bus No {busid}</Text>
       </View>
 
       <View style={styles.container}>
@@ -100,6 +131,7 @@ const index = (navigation) => {
           )}
         />
       </View>
+      {/* <Map/> */}
     </>
   );
 };

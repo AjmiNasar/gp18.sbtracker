@@ -1,14 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useRouter } from "expo-router";
+import axios from 'axios'
 export default function App() {
+    const [userdata,setuserdata]=useState([])
+    useEffect(()=>{
+      axios.get("https://09c8-2401-4900-332a-e697-4550-a036-ca21-ada5.ngrok-free.app/userdata").then((response)=>
+      {
+        const data=response.data.data 
+        console.log(data)
+        setuserdata(data)
+    
+    }).catch((err)=>console.log(err))
+    },[])
 
     const dismissKeyboard = () => {
       Keyboard.dismiss();
     };
 
     const [username, setUsername ] = useState("")
+
+ 
+
     const [Password, setPassword ] = useState("")
     const [schoolid, setSchoolid ] = useState("")
     const [errors, setErrors ] = useState({})
@@ -30,11 +44,22 @@ export default function App() {
     const handleSubmit = ()=>{
       if (validateForm()) {
         console.log("Submitted", username, Password, schoolid);
+        userdata.forEach((element)=>{
+          if(element.username===username && element.password===Password){
+            setUsername("");
+            setPassword("");
+            setSchoolid("");
+            setErrors({});
+       
+            router.replace("/(tabs)/Home");
+          }
+        })
         setUsername("");
-        setPassword("");
-        setSchoolid("");
-        setErrors({});
-        router.replace("/(tabs)/Home");
+            setPassword("");
+            setSchoolid("");
+            setErrors({});
+        
+        
       }
     }
 
