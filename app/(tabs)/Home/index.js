@@ -106,16 +106,11 @@ const index = () => {
             }}
           >
             <Pressable style={{ height: 50, color: "white" }}
-<<<<<<< Updated upstream
-            onPress={() => router.navigate("/(pages)/Businfo")}>
-              <Text style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }}>Bus No 1</Text>
-=======
             >
 
               <Link style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:0}}}>Bus No 1</Link>
 
               
->>>>>>> Stashed changes
             </Pressable>
           </View>
           <View
