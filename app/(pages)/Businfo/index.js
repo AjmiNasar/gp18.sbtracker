@@ -35,18 +35,11 @@ const index = (navigation) => {
   var stop_name = "School";
   const data = [
     { time: "09:00", title: "School", delay: "09:00" },
-<<<<<<< Updated upstream
-    { time: "09:10", title: "Pallimoola", delay: "09:15" },
-    { time: "09:17", title: "Cheroor", delay: "09:23" }, 
-    { time: "09:28", title: "asdgfd", delay: "09:28" },
-    { time: "09:35", title: "zfgxhjg", delay: "09:34" }, 
-=======
     { time: "09:10", title: stops[0], delay: "09:15" },
     { time: "09:17", title: stops[1], delay: "09:23" }, // No delay
     { time: "09:28", title: stops[2], delay: "09:28" },
     { time: "09:35", title: stops[3], delay: "09:34" }, // No delay
     { time: "09:45", title: stops[4], delay: "09:46" }, // No delay
->>>>>>> Stashed changes
   ];
 
   return (
