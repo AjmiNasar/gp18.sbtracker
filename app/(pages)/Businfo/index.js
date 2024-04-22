@@ -15,7 +15,7 @@ const index = (navigation) => {
   const busid=parseInt(params.id)+1
 
   useEffect(()=>{
-    axios.get("https://09c8-2401-4900-332a-e697-4550-a036-ca21-ada5.ngrok-free.app/getbusdetailseve").then((response)=>
+    axios.get("https://social-choice-catfish.ngrok-free.app/getbusdetailseve").then((response)=>
     {
       // setAllstops(response.data)
       // setAllstops(response.data.data)
