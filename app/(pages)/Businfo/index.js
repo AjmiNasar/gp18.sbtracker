@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -15,7 +15,7 @@ const index = (navigation) => {
   const busid=parseInt(params.id)+1
 
   useEffect(()=>{
-    axios.get("https://09c8-2401-4900-332a-e697-4550-a036-ca21-ada5.ngrok-free.app/getbusdetailseve").then((response)=>
+    axios.get("https://social-choice-catfish.ngrok-free.app/getbusdetailseve").then((response)=>
     {
       // setAllstops(response.data)
       // setAllstops(response.data.data)
@@ -28,6 +28,8 @@ const index = (navigation) => {
   
   
   }).catch((err)=>console.log(err))
+  ws= new WebSocket("ws://social-choice-catfish.ngrok-free.app/ws")
+  ws.onopen= ()=> ws.send("Connected to React")
   },[])
 
   var place = "";
@@ -35,19 +37,16 @@ const index = (navigation) => {
   var stop_name = "School";
   const data = [
     { time: "09:00", title: "School", delay: "09:00" },
-<<<<<<< Updated upstream
-    { time: "09:10", title: "Pallimoola", delay: "09:15" },
-    { time: "09:17", title: "Cheroor", delay: "09:23" }, 
-    { time: "09:28", title: "asdgfd", delay: "09:28" },
-    { time: "09:35", title: "zfgxhjg", delay: "09:34" }, 
-=======
     { time: "09:10", title: stops[0], delay: "09:15" },
     { time: "09:17", title: stops[1], delay: "09:23" }, // No delay
     { time: "09:28", title: stops[2], delay: "09:28" },
     { time: "09:35", title: stops[3], delay: "09:34" }, // No delay
     { time: "09:45", title: stops[4], delay: "09:46" }, // No delay
->>>>>>> Stashed changes
   ];
+  const handleclick=()=>{
+    ws.send("Hi from Native")
+  }
+
 
   return (
     <>
@@ -83,6 +82,7 @@ const index = (navigation) => {
           <Text style={{ color: "red", textAlign: "center" }}>
             will be arriving at {time}
           </Text>
+          <TouchableOpacity onPress={handleclick}><Text>Click me</Text></TouchableOpacity>
         </View>
       </View>
       <View
