@@ -15,11 +15,11 @@ const index = (navigation) => {
   const busid=parseInt(params.id)+1
 
   useEffect(()=>{
-    axios.get("https://social-choice-catfish.ngrok-free.app/getbusdetailseve").then((response)=>
+    axios.get(`https://social-choice-catfish.ngrok-free.app/getbusdetailseve/${busid}`).then((response)=>
     {
       // setAllstops(response.data)
       // setAllstops(response.data.data)
-      const data=response.data.data[params.id].stops 
+      const data=response.data.data.stops 
       console.log(data)
       data.forEach((element) => {
         setStops((prev)=>[...prev,element.name])

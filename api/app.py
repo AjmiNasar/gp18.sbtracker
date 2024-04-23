@@ -69,7 +69,7 @@ async def getbusdet(bus_id:int):
         t_min=t*60
         time.append(t_min)
 
-    return {"status":"ok","data":{"distances":distances,"time":time,"other_data":response}}
+    return {"status":"ok","data":response ,"distances":distances,"time":time}
     
 
 @app.post('/busdet_eve')
