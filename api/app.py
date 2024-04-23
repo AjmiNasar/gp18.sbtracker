@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,WebSocket
 from tortoise.contrib.fastapi import register_tortoise
 from models import Gpsdata,Gpsdata_pydantic,Gpsdata_pydanticIn,user_model,bus_model,User,BusDetailsEve,bus_modelIn
 from fastapi.middleware.cors import CORSMiddleware
@@ -29,6 +29,11 @@ async def add_gpsdata(gpsinfo:Gpsdata_pydantic):
 @app.get('/gpsdata')
 async def get_gpsdata():
     response=await Gpsdata_pydantic.from_queryset(Gpsdata.all())
+    return {"status":"ok","data":response}
+
+@app.get('/getbusdetailseve')
+async def getbusdetall():
+    response=await bus_model.from_queryset(BusDetailsEve.all())
     return {"status":"ok","data":response}
 
 @app.get('/getbusdetailseve/{bus_id}')
@@ -64,7 +69,7 @@ async def getbusdet(bus_id:int):
         t_min=t*60
         time.append(t_min)
 
-    return {"status":"ok","data":{"distances":distances,"time":time,"other_data":response}}
+    return {"status":"ok","data":response ,"distances":distances,"time":time}
     
 
 @app.post('/busdet_eve')
@@ -129,6 +134,19 @@ async def mapdata(user_id:int):
     bus_det=await Bus.get(user=user_det)
     bus_details=await BusDetails.get(bus=bus_det)
     return {"data":bus_details}
+
+@app.websocket('/ws')
+async def testsocket(websocket:WebSocket):
+    print("Accepting connection")
+    await websocket.accept()
+    print("Accepted")
+    while True:
+        try:
+            data=await websocket.receive_text()
+            print(data)
+        except:
+            pass 
+            break
     
 
 

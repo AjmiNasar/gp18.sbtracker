@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -15,11 +15,12 @@ const index = (navigation) => {
   const busid=parseInt(params.id)+1
 
   useEffect(()=>{
-    axios.get("https://social-choice-catfish.ngrok-free.app/getbusdetailseve").then((response)=>
+
+    axios.get(`https://social-choice-catfish.ngrok-free.app/getbusdetailseve/${busid}`).then((response)=>
     {
       // setAllstops(response.data)
       // setAllstops(response.data.data)
-      const data=response.data.data[params.id].stops 
+      const data=response.data.data.stops 
       console.log(data)
       data.forEach((element) => {
         setStops((prev)=>[...prev,element.name])
@@ -28,6 +29,8 @@ const index = (navigation) => {
   
   
   }).catch((err)=>console.log(err))
+  ws= new WebSocket("ws://social-choice-catfish.ngrok-free.app/ws")
+  ws.onopen= ()=> ws.send("Connected to React")
   },[])
 
   var place = "";
@@ -41,6 +44,10 @@ const index = (navigation) => {
     { time: "09:35", title: stops[3], delay: "09:34" }, // No delay
     { time: "09:45", title: stops[4], delay: "09:46" }, // No delay
   ];
+  const handleclick=()=>{
+    ws.send("Hi from Native")
+  }
+
 
   return (
     <>
@@ -76,6 +83,7 @@ const index = (navigation) => {
           <Text style={{ color: "red", textAlign: "center" }}>
             will be arriving at {time}
           </Text>
+          <TouchableOpacity onPress={handleclick}><Text>Click me</Text></TouchableOpacity>
         </View>
       </View>
       <View
