@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
     height: 250, 
     borderRadius: 120,
     backgroundColor: '#90DBD3',
+    zIndex:-2
     // transform: [{ rotate: '45deg' }],
   },
 });

@@ -86,7 +86,7 @@ const index = (navigation) => {
           <Text style={{ color: "red", textAlign: "center" }}>
             will be arriving at {time}
           </Text>
-          <TouchableOpacity onPress={handleclick}><Text>Click me</Text></TouchableOpacity>
+          <TouchableOpacity onPress={handleclick}><Text></Text></TouchableOpacity>
         </View>
       </View>
       <View

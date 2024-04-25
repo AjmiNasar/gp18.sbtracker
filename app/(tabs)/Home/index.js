@@ -51,7 +51,7 @@ const index = () => {
           flexDirection: "row",
           alignItems: "center",
           gap: 8,
-          backgroundColor: "#e0e0e0",
+          backgroundColor: "#90DBD3",
           height: 110,
           borderBottomEndRadius: 40,
           borderBottomStartRadius: 40,
@@ -69,13 +69,13 @@ const index = () => {
             justifyContent: "center",
           }}
         >
-          <FontAwesome name="user-circle-o" size={34} color="black" />
+          <FontAwesome name="user-circle-o" size={30} color="#EBEBEB" />
         </Pressable>
         {/* <Text style={{ marginLeft: -2, color: "black", fontSize: 20 }}>
           Where is my
         </Text>
         <Text style={{ color: "#F98B88", fontSize: 20 }}>School Bus</Text> */}
-        <Text style={{color: "black", fontSize: 20, marginRight:5}} onPress={()=>router.replace("/(authenticate)/open")}>Logout</Text>
+        <Text style={{color: "gray", fontSize: 16, marginRight:12}} onPress={()=>router.replace("/(authenticate)/open")}>Logout</Text>
       </View>
      
 
@@ -108,8 +108,10 @@ const index = () => {
             <Pressable style={{ height: 50, color: "white" }}
             >
 
-              <Link style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:0}}}>Bus No 1</Link>
-
+              <Link style={{ top:0, fontWeight:"600", fontSize: 25, textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:0}}}>Bus No 1</Link>
+              <Text style={{ fontSize: 12, fontWeight: "400", color: "red",textAlign:'left',marginTop:5,marginLeft:30  }}>
+              Peringaavu - Nelikunnu
+              </Text>
               
             </Pressable>
           </View>
@@ -136,8 +138,10 @@ const index = () => {
           >
             <Pressable style={{ height: 50, color: "white" }}>
 
-              <Link style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:1}}}>Bus No 2</Link>
-
+              <Link style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:1}}}>Bus No 2</Link>
+              <Text style={{ fontSize: 12, fontWeight: "400", color: "red",textAlign:'left',marginTop:5,marginLeft:30  }}>
+              Peringaavu - Nelikunnu
+              </Text>
             
             </Pressable>
           </View>
@@ -164,8 +168,10 @@ const index = () => {
           >
             <Pressable style={{ height: 50, color: "white" }}>
 
-              <Link style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:2}}}>Bus No 3</Link>
-
+              <Link style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:2}}}>Bus No 3</Link>
+              <Text style={{ fontSize: 12, fontWeight: "400", color: "red",textAlign:'left',marginTop:5,marginLeft:30  }}>
+              Viyyur - Athani
+              </Text>
             
             </Pressable>
           </View>
@@ -193,8 +199,10 @@ const index = () => {
           >
             <Pressable style={{ height: 50, color: "white" }}>
 
-              <Link style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:3}}}>Bus No 4</Link>
-
+              <Link style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:3}}}>Bus No 4</Link>
+              <Text style={{ fontSize: 12, fontWeight: "400", color: "red",textAlign:'left',marginTop:5,marginLeft:30  }}>
+              Veliyannur - Vallachira
+              </Text>
             
             </Pressable>
           </View>
@@ -222,8 +230,10 @@ const index = () => {
         >
           <Pressable style={{ height: 50, color: "white" }}>
 
-            <Link style={{ top:0, fontSize: 25, textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:4}}}>Bus No 5</Link>
-
+            <Link style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:4}}}>Bus No 5</Link>
+            <Text style={{ fontSize: 12, fontWeight: "400", color: "red",textAlign:'left',marginTop:5,marginLeft:30  }}>
+              Mannuthy- Pattikad
+              </Text>
           
           </Pressable>
         </View>
