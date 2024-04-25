@@ -11,38 +11,41 @@ import axios from 'axios';
 
 const index = (navigation) => {
   const [stops,setStops]=useState([])
+  const [times,setTime]=useState([])
   const params=useLocalSearchParams()
   const busid=parseInt(params.id)+1
 
   useEffect(()=>{
 
-    axios.get(`https://social-choice-catfish.ngrok-free.app/getbusdetailseve/${busid}`).then((response)=>
+    axios.get(`https://ba70-2405-201-f01f-d807-78aa-9a58-439f-3dba.ngrok-free.app/getbusdetailseve/${busid}`).then((response)=>
     {
       // setAllstops(response.data)
       // setAllstops(response.data.data)
       const data=response.data.data.stops 
+      const times=response.data.time
+      setTime(times)
       console.log(data)
       data.forEach((element) => {
         setStops((prev)=>[...prev,element.name])
       });
-
   
   
   }).catch((err)=>console.log(err))
   ws= new WebSocket("ws://social-choice-catfish.ngrok-free.app/ws")
   ws.onopen= ()=> ws.send("Connected to React")
   },[])
-
+  const initial="03:30"
   var place = "";
   var time;
   var stop_name = "School";
+
   const data = [
-    { time: "09:00", title: "School", delay: "09:00" },
-    { time: "09:10", title: stops[0], delay: "09:15" },
-    { time: "09:17", title: stops[1], delay: "09:23" }, // No delay
-    { time: "09:28", title: stops[2], delay: "09:28" },
-    { time: "09:35", title: stops[3], delay: "09:34" }, // No delay
-    { time: "09:45", title: stops[4], delay: "09:46" }, // No delay
+    { time: initial, title: "School", delay: "03:30" },
+    { time: times[0], title: stops[0], delay: "03:34" },
+    { time: times[1], title: stops[1], delay: "03:40" }, // No delay
+    { time: times[2], title: stops[2], delay: "03:45" },
+    { time: times[3], title: stops[3], delay: "03:48" }, // No delay
+    { time: times[4], title: stops[4], delay: "03:52" }, // No delay
   ];
   const handleclick=()=>{
     ws.send("Hi from Native")

@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Button, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Pressable } from 'react-native';
 import { useRouter } from "expo-router";
 import axios from 'axios'
 export default function App() {
     const [userdata,setuserdata]=useState([])
     useEffect(()=>{
-      axios.get("https://social-choice-catfish.ngrok-free.app/userdata").then((response)=>
+      axios.get("https://ba70-2405-201-f01f-d807-78aa-9a58-439f-3dba.ngrok-free.app/userdata").then((response)=>
       {
         const data=response.data.data 
         console.log(data)
@@ -67,7 +67,6 @@ export default function App() {
     <TouchableWithoutFeedback onPress={dismissKeyboard}>
     <KeyboardAvoidingView behavior= "padding" style={styles.container}>
     
-
       <View style={styles.form}>
 
         <Text style= {styles.label}>login</Text>
@@ -90,8 +89,10 @@ export default function App() {
           errors.schoolid ? <Text style= {styles.errorText}>{errors.schoolid}</Text> : null
         }
 
-        <Button title='Submit'  onPress= {handleSubmit}/>
+        <Button title='Submit' onPress= {handleSubmit}  color="#F98B88" />
      </View>
+     <View style={styles.shape2} />
+     <View style={styles.circle} />
      </KeyboardAvoidingView>
      </TouchableWithoutFeedback>
   );
@@ -100,7 +101,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    
+    backgroundColor: 'white',
     paddingHorizontal: 20,
     justifyContent: 'center',
   },
@@ -146,7 +147,26 @@ const styles = StyleSheet.create({
   errorText: {
     color: "red",
     marginBottom: 10
-  }
+  },
+  shape2:{
+      position: 'absolute',
+      bottom:95, 
+      width: 280, 
+      height:280, 
+      borderRadius:120,
+      backgroundColor: '#FFC5C5',
+      zIndex:-2,
+  },
+  circle: {
+    position: 'absolute',
+    top: -60, 
+    right: -60, 
+    width: 250,
+    height: 250, 
+    borderRadius: 120,
+    backgroundColor: '#90DBD3',
+    // transform: [{ rotate: '45deg' }],
+  },
 });
 
 

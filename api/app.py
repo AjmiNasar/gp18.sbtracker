@@ -3,7 +3,7 @@ from tortoise.contrib.fastapi import register_tortoise
 from models import Gpsdata,Gpsdata_pydantic,Gpsdata_pydanticIn,user_model,bus_model,User,BusDetailsEve,bus_modelIn
 from fastapi.middleware.cors import CORSMiddleware
 from geopy.distance import distance
-
+import datetime
 app=FastAPI()
 
 origins=['*']
@@ -67,9 +67,14 @@ async def getbusdet(bus_id:int):
     for dist in distances:
         t=dist/avg_speed
         t_min=t*60
-        time.append(t_min)
+        time.append(round(t_min,2))
+    initial_time = datetime.datetime.strptime("03:30", "%H:%M")
+    arrival_times=[]
+    for t in time:
+        initial_time += datetime.timedelta(minutes=t)
+        arrival_times.append(initial_time.strftime("%H:%M"))
 
-    return {"status":"ok","data":response ,"distances":distances,"time":time}
+    return {"status":"ok","data":response ,"distances":distances,"time":arrival_times}
     
 
 @app.post('/busdet_eve')

@@ -20,7 +20,9 @@ const open = () => {
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
     >
-   
+          <View style={styles.container}>
+          <View style={styles.rectangle} />
+          </View>
       <View style={{ marginTop: 250 }}>
         <Text style={{ fontSize: 40, fontWeight: "600", color: "black",textAlign:'center' }}>
           Where is my
@@ -28,14 +30,15 @@ const open = () => {
         <Text style={{ fontSize: 40, fontWeight: "600", color: "#F98B88" ,textAlign:'center' }}>
          School Bus
         </Text>
-        <Text style={{ fontSize: 10, fontWeight: "200", color: "black",textAlign:'center'  }}>
+        <Text style={{ fontSize: 15, fontWeight: "200", color: "black",textAlign:'center',marginTop:10  }}>
          Track Your Bus Anytime
         </Text>
+        <View style ={{flexDirection:"row", justifyContent:"center", alignItems:"center", marginTop: 15,}}>
         <Pressable
             onPress={() => router.navigate("/login")}
             style={{ marginTop: 15 }}
           >
-            <Text style={{ textAlign: "center", fontSize: 15, color: "gray" }}>
+            <Text style={{ textAlign: "center", fontSize: 15, color: "brown" ,marginRight:20}}>
               Login
             </Text>
           </Pressable>
@@ -43,10 +46,14 @@ const open = () => {
             onPress={() => router.navigate("/register")}
             style={{ marginTop: 15 }}
           >
-            <Text style={{ textAlign: "center", fontSize: 15, color: "gray" }}>
-             New User?
+            <Text style={{ textAlign: "center", fontSize: 15, color: "brown" }}>
+              Register
             </Text>
           </Pressable>
+          </View>
+          <View style={{ alignItems: "center", marginTop: 15 }}>
+          <Image source={require('../../assets/bus.png')} style={{ width: 280, height: 220 ,marginTop:50}} />
+        </View>
       </View>
       <KeyboardAvoidingView>
 
@@ -55,6 +62,25 @@ const open = () => {
   )
 }
 
+
 export default open
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({container: {
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  width: '50%',
+  height: '25%',
+  overflow: 'hidden',
+},
+rectangle: {
+  position: 'absolute',
+  top: -60, // Adjust the position as needed
+  right: -60, // Adjust the position as needed
+  width: 250, // 120 * 2 for width
+  height: 240, // 120 * 2 for height
+  borderBottomLeftRadius: 100,
+  backgroundColor: '#FF9292',
+  // transform: [{ rotate: '45deg' }],
+},
+})
