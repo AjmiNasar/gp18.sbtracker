@@ -1,4 +1,4 @@
-# Where-is-my-school-bus
+# Where is my school bus
 
 [![Banner](./assets/banner.png)](https://example.com/link_to_your_page)
 
