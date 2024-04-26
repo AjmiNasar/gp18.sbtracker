@@ -6,7 +6,7 @@ import axios from 'axios'
 export default function App() {
     const [userdata,setuserdata]=useState([])
     useEffect(()=>{
-      axios.get("https://ba70-2405-201-f01f-d807-78aa-9a58-439f-3dba.ngrok-free.app/userdata").then((response)=>
+      axios.get("https://4a63-2401-4900-615c-9e21-936-5bd-d2c-a1f6.ngrok-free.app/userdata").then((response)=>
       {
         const data=response.data.data 
         console.log(data)
