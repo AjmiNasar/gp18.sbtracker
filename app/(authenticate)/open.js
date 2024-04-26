@@ -33,23 +33,35 @@ const open = () => {
         <Text style={{ fontSize: 15, fontWeight: "200", color: "black",textAlign:'center',marginTop:10  }}>
          Track Your Bus Anytime
         </Text>
-        <View style ={{flexDirection:"row", justifyContent:"center", alignItems:"center", marginTop: 15,}}>
+        <View style ={{marginTop: 15,}} className="w-1/2 flex flex-row flex-wrap gap-3 justify-center items-center mx-auto">
         <Pressable
             onPress={() => router.navigate("/login")}
             style={{ marginTop: 15 }}
+            className="w-1/3"
           >
-            <Text style={{ textAlign: "center", fontSize: 15, color: "brown" ,marginRight:20}}>
+            <Text style={{ textAlign: "center", fontSize: 15, color: "brown" }}>
               Login
             </Text>
           </Pressable>
-        <Pressable
+          <Pressable
             onPress={() => router.navigate("/register")}
             style={{ marginTop: 15 }}
+            className="w-1/3"
           >
             <Text style={{ textAlign: "center", fontSize: 15, color: "brown" }}>
               Register
             </Text>
           </Pressable>
+          <Pressable
+            onPress={() => router.navigate("/driver")}
+            style={{ marginTop: 15 }}
+            className="w-1/2"
+          >
+            <Text style={{ textAlign: "center", fontSize: 15, color: "brown" }}>
+              Driver Login
+            </Text>
+          </Pressable>
+        
           </View>
           <View style={{ alignItems: "center", marginTop: 15 }}>
           <Image source={require('../../assets/bus.png')} style={{ width: 280, height: 220 ,marginTop:50}} />
