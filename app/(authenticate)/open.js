@@ -33,11 +33,11 @@ const open = () => {
         <Text style={{ fontSize: 15, fontWeight: "200", color: "black",textAlign:'center',marginTop:10  }}>
          Track Your Bus Anytime
         </Text>
-        <View style ={{marginTop: 15,}} className="w-1/2 flex flex-row flex-wrap gap-3 justify-center items-center mx-auto">
+        <View style ={{marginTop: 15,}} className="w-1/2 flex flex-row gap-3 justify-center items-center mx-auto">
         <Pressable
             onPress={() => router.navigate("/login")}
             style={{ marginTop: 15 }}
-            className="w-1/3"
+            className=""
           >
             <Text style={{ textAlign: "center", fontSize: 15, color: "brown" }}>
               Login
@@ -46,7 +46,7 @@ const open = () => {
           <Pressable
             onPress={() => router.navigate("/register")}
             style={{ marginTop: 15 }}
-            className="w-1/3"
+            className=""
           >
             <Text style={{ textAlign: "center", fontSize: 15, color: "brown" }}>
               Register
@@ -55,10 +55,10 @@ const open = () => {
           <Pressable
             onPress={() => router.navigate("/driver")}
             style={{ marginTop: 15 }}
-            className="w-1/2"
+            className=""
           >
             <Text style={{ textAlign: "center", fontSize: 15, color: "brown" }}>
-              Driver Login
+              Driver
             </Text>
           </Pressable>
         
