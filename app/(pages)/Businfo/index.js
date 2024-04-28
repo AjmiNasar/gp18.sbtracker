@@ -12,12 +12,13 @@ import axios from 'axios';
 const index = (navigation) => {
   const [stops,setStops]=useState([])
   const [times,setTime]=useState([])
+  const [driverData,setDriverData]=useState(null)
   const params=useLocalSearchParams()
   const busid=parseInt(params.id)+1
 
   useEffect(()=>{
 
-    axios.get(`https://ba70-2405-201-f01f-d807-78aa-9a58-439f-3dba.ngrok-free.app/getbusdetailseve/${busid}`).then((response)=>
+    axios.get(`https://social-choice-catfish.ngrok-free.app/getbusdetailseve/${busid}`).then((response)=>
     {
       // setAllstops(response.data)
       // setAllstops(response.data.data)
@@ -31,8 +32,28 @@ const index = (navigation) => {
   
   
   }).catch((err)=>console.log(err))
-  ws= new WebSocket("ws://social-choice-catfish.ngrok-free.app/ws")
-  ws.onopen= ()=> ws.send("Connected to React")
+  
+  },[])
+
+  useEffect(()=>{
+    ws= new WebSocket("ws://social-choice-catfish.ngrok-free.app/ws")
+    ws.onopen=()=> {
+    ws.send("Connected to React")
+    ws.send("Message 2")
+    }
+    ws.onmessage=(e)=>{
+      console.log(e)
+      // setDriverData(e.data)
+      }
+  
+  // const interval=setInterval(()=>{
+  //   ws.onmessage=(e)=>{
+  //   console.log(e)
+  //   // setDriverData(e.data)
+  //   }
+  //   console.log("Testing message")
+  // },2500)
+  
   },[])
   const initial="03:30"
   var place = "";

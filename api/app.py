@@ -4,7 +4,10 @@ from models import Gpsdata,Gpsdata_pydantic,Gpsdata_pydanticIn,user_model,bus_mo
 from fastapi.middleware.cors import CORSMiddleware
 from geopy.distance import distance
 import datetime
+import json
 app=FastAPI()
+
+connected_clients=[]
 
 origins=['*']
 app.add_middleware(
@@ -144,11 +147,20 @@ async def mapdata(user_id:int):
 async def testsocket(websocket:WebSocket):
     print("Accepting connection")
     await websocket.accept()
-    print("Accepted")
+    print("Accepted ",websocket)
+    connected_clients.append(websocket)
+    await websocket.send_text("Hello")
     while True:
         try:
             data=await websocket.receive_text()
-            print(data)
+            try:
+                driverData=json.loads(data)
+                print(driverData)
+                await websocket.send_text(data)
+                async for client in connected_clients:
+                    await client.send_text(data)
+            except:
+                print("Normal message",data)
         except:
             pass 
             break
