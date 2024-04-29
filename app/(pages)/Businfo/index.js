@@ -1,5 +1,5 @@
 import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -15,6 +15,7 @@ const index = (navigation) => {
   const [driverData,setDriverData]=useState(null)
   const params=useLocalSearchParams()
   const busid=parseInt(params.id)+1
+  const inputRef=useRef(0)
 
   useEffect(()=>{
 
@@ -36,23 +37,31 @@ const index = (navigation) => {
   },[])
 
   useEffect(()=>{
+    console.log(inputRef.current)
+    inputRef.current.scrollBottom=50
     ws= new WebSocket("ws://social-choice-catfish.ngrok-free.app/ws")
     ws.onopen=()=> {
     ws.send("Connected to React")
     ws.send("Message 2")
     }
     ws.onmessage=(e)=>{
-      console.log(e)
+      console.log("Message",e.data)
+      if(JSON.parse(e.data)){
+        console.log("Parsed")
+      }
+      else{
+        console.log('Not parsed')
+      }
       // setDriverData(e.data)
       }
   
-  // const interval=setInterval(()=>{
+  // const interval=setInterval( async ()=>{
   //   ws.onmessage=(e)=>{
-  //   console.log(e)
+  //   console.log(e.data)
   //   // setDriverData(e.data)
   //   }
-  //   console.log("Testing message")
   // },2500)
+  // return () => clearInterval(interval);
   
   },[])
   const initial="03:30"
@@ -68,9 +77,7 @@ const index = (navigation) => {
     { time: times[3], title: stops[3], delay: "03:48" }, // No delay
     { time: times[4], title: stops[4], delay: "03:52" }, // No delay
   ];
-  const handleclick=()=>{
-    ws.send("Hi from Native")
-  }
+
 
 
   return (
@@ -107,7 +114,6 @@ const index = (navigation) => {
           <Text style={{ color: "red", textAlign: "center" }}>
             will be arriving at {time}
           </Text>
-          <TouchableOpacity onPress={handleclick}><Text></Text></TouchableOpacity>
         </View>
       </View>
       <View
@@ -135,11 +141,12 @@ const index = (navigation) => {
         <Text style={{ color: "red" }}>Bus No {busid}</Text>
       </View>
 
-      <View style={styles.container}>
+      <View style={styles.container} className="relativ h-auto">
         <View style={styles.busPointer}>
-        <FontAwesome5 name="bus-alt" size={20} color="#4169E1" />
+        <FontAwesome5 name="bus-alt" size={20} color="#4169E1"/>
         </View>
         <Timeline
+        ref={inputRef}
           data={data}
           circleSize={8}
           circleColor="#343434"
@@ -147,6 +154,7 @@ const index = (navigation) => {
           titleStyle={styles.title}
           timeContainerStyle={styles.time}
           descriptionStyle={styles.description}
+          className="h-full"
           renderDetail={(rowData, sectionID, rowID) => (
             <View style={styles.detailContainer}>
               <Text style={styles.title}>{rowData.title}</Text>
@@ -171,7 +179,7 @@ const styles = StyleSheet.create({
   },
   busPointer: {
     position: "absolute",
-    top: -4,
+    top: -8,
     left: 55,
   },
   time:{

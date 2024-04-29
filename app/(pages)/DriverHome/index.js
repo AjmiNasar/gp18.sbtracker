@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, Image } from 'react-native';
 import * as Location from 'expo-location'
+import {Switch,ActivityIndicator} from 'react-native-paper'
+import locationImage from '../../../assets/location.png'
 
 const index = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
   
   useEffect(() => {
 
@@ -19,8 +22,10 @@ const index = () => {
 
       if (foregroundStatus.status !== 'granted' || backgroundStatus.status !== 'granted') {
         setErrorMsg('Permission to access location was denied');
+        setIsSwitchOn(false)
         return;
       }
+      
 
       // Start the timer to get current position periodically
       const timerId = setInterval(getCurrentPosition, 2000); // Runs every 5 seconds
@@ -35,6 +40,7 @@ const index = () => {
         let location = await Location.getCurrentPositionAsync({});
         setLocation(location);
         setErrorMsg(null);
+        setIsSwitchOn(true)
       } catch (error) {
         setErrorMsg(error.message);
       }
@@ -48,25 +54,42 @@ const index = () => {
       const driverData={'Latitude':location.coords.latitude,'Longitude':location.coords.longitude}
       ws.send(JSON.stringify(driverData))
     }
-    ws.onmessage=(e)=>{
-      console.log(e.data)
-    }
+    // ws.onmessage=(e)=>{
+    // }
   },[location])
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView className="mt-5">
+      <View className="flex flex-row justify-between p-6 bg-blue-500">
+        <Text className="p-3 text-lg">Location</Text>
+        <Text>
+          <Switch value={isSwitchOn}/>
+        </Text>
+
+      </View>
       {errorMsg ? <Text>{errorMsg}</Text> : null}
       {location ? (
-        <View>
+        <View className="items-center">
+          <Text className="my-5 text-xl font-semibold">You can start your journey!</Text>
+          <View className="flex flex-col items-center  gap-y-3">
+          <Image source={locationImage} className="aspect-square w-20 h-20"/>
           <Text>
-            Latitude: {location.coords.latitude}, Longitude: {location.coords.longitude}
+            Latitude: {location.coords.latitude}
+          </Text>
+          <Text>
+            Longitude: {location.coords.longitude}
           </Text>
           <Text>Speed: {location.coords.speed ? location.coords.speed.toFixed(2) : 'Not Available'} m/s</Text>
         </View>
+      </View>
       ) : (
-        <Text>Loading...</Text>
+        <View className="items-center top-40">
+        <Text>
+          <ActivityIndicator animating={true} size={'large'}/>
+        </Text>
+        </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 }
 const getLocationData = () => {

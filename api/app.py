@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from geopy.distance import distance
 import datetime
 import json
+import asyncio
 app=FastAPI()
 
 connected_clients=[]
@@ -156,11 +157,13 @@ async def testsocket(websocket:WebSocket):
             try:
                 driverData=json.loads(data)
                 print(driverData)
-                await websocket.send_text(data)
-                async for client in connected_clients:
-                    await client.send_text(data)
-            except:
-                print("Normal message",data)
+                # await websocket.send_text(data)
+                # async for client in connected_clients:
+                #     await client.send_text(data)
+                #     print("Sending data to",client)
+                await asyncio.gather(*[client.send_text(data) for client in connected_clients])
+            except Exception as e:
+                print("Error is :",e)
         except:
             pass 
             break
