@@ -1,5 +1,5 @@
 import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,7 +17,7 @@ const index = (navigation) => {
 
   useEffect(()=>{
 
-    axios.get(`https://4a63-2401-4900-615c-9e21-936-5bd-d2c-a1f6.ngrok-free.app/${busid}`).then((response)=>
+    axios.get(`https://5ced-2401-4900-615c-9551-8887-d97-3ffb-bada.ngrok-free.app/${busid}`).then((response)=>
     {
       // setAllstops(response.data)
       // setAllstops(response.data.data)
@@ -50,8 +50,7 @@ const index = (navigation) => {
   const handleclick=()=>{
     ws.send("Hi from Native")
   }
-
-
+  
   return (
     <>
       <View
@@ -84,7 +83,7 @@ const index = (navigation) => {
             Your ward has reached {place}
           </Text>
           <Text style={{ color: "red", textAlign: "center" }}>
-            will be arriving at {time}
+            will be arriving at 
           </Text>
           <TouchableOpacity onPress={handleclick}><Text></Text></TouchableOpacity>
         </View>
@@ -129,7 +128,6 @@ const index = (navigation) => {
           renderDetail={(rowData, sectionID, rowID) => (
             <View style={styles.detailContainer}>
               <Text style={styles.title}>{rowData.title}</Text>
-
               <Text style={styles.description}>{rowData.delay}</Text>
             </View>
           )}

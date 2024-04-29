@@ -50,9 +50,25 @@ const open = () => {
               Register
             </Text>
           </Pressable>
+
+
+
+          <Pressable
+            onPress={() => router.navigate("/(pages)/Trial")}
+            style={{ marginTop: 15 }}
+          >
+            <Text style={{ textAlign: "center", fontSize: 15, color: "brown" }}>
+              Trial
+            </Text>
+          </Pressable>
+
+
+
+
           </View>
           <View style={{ alignItems: "center", marginTop: 15 }}>
           <Image source={require('../../assets/bus.png')} style={{ width: 280, height: 220 ,marginTop:50}} />
+          <View style={styles.oval}/>
         </View>
       </View>
       <KeyboardAvoidingView>
@@ -83,4 +99,16 @@ rectangle: {
   backgroundColor: '#FF9292',
   // transform: [{ rotate: '45deg' }],
 },
-})
+oval:{
+  width: 235,
+  height: 208,
+  backgroundColor: '#FFE1E1',
+  borderRadius: 120,
+  position:'absolute',
+  bottom: -104,  // Half of the height to align it below the image
+zIndex:-1,
+marginBottom:150,
+right:60
+
+}}
+)

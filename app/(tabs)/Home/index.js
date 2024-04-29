@@ -22,7 +22,7 @@ const index = () => {
   const [stops,setStops]=useState([])
   const [busData,setbusData]=useState([]);
   useEffect(()=>{
-    axios.get("https://4a63-2401-4900-615c-9e21-936-5bd-d2c-a1f6.ngrok-free.app/getbusdetailseve").then((response)=>
+    axios.get("https://5ced-2401-4900-615c-9551-8887-d97-3ffb-bada.ngrok-free.app/getbusdetailseve").then((response)=>
     {setbusData(response.data)
       // setAllstops(response.data)
       // setAllstops(response.data.data)
