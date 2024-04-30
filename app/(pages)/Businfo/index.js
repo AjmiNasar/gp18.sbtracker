@@ -1,4 +1,5 @@
-import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
+import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View,Image } from "react-native";
 import React, { useEffect, useState,useRef } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -9,21 +10,74 @@ import { useLocalSearchParams, useRouteInfo, useRouter } from "expo-router/build
 import axios from 'axios';
 
 
+
 const index = (navigation) => {
   const [stops,setStops]=useState([])
   const [times,setTime]=useState([])
+  const [dist,setDist]=useState([])
+  const [speed,setSpeed]=useState(40)
+  const [driverData,setDriverData]=useState(null)
+  const [driverLoc,setDriverLoc]=useState(null)
   const params=useLocalSearchParams()
   const busid=parseInt(params.id)+1
+  const inputRef=useRef(0)
+  // const onDisplayLocalNotification = async () => {
+  //   // Assuming `stops` and `dest` are defined elsewhere in your code
+  
+  //   // Create a channel (required for Android)
+  //   const channelId = await notifee.createChannel({
+  //     id: 'default',
+  //     name: 'Default Channel',
+  //   });
+  
+  //   // Assuming `stops` is defined elsewhere and is an array
+  //   await Promise.all(stops.map(async (item) => {
+
+  //       // Display a notification
+  //       await notifee.displayNotification({
+  //         title: "The wait is over! We've made it!",
+  //         body: 'Your ward has reached the destination',
+  //         android: {
+  //           channelId,
+  //         },
+  //       });
+      
+  //   }));
+  // };
+  
+
+//   async function getPlaceName(lat, lon) {
+//     const apiUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`;
+
+//     try {
+//         const response = await axios.get(apiUrl);
+//         const data = response.data;
+        
+//         if (data.display_name) {
+//             const placeName = data;
+//             console.log('Place Name:', placeName);
+//             setDriverLoc(placeName)
+//         } else {
+//             console.log('No results found');
+//         }
+//     } catch (error) {
+//         console.error('Error:', error.message);
+//     }
+// }
+
 
   useEffect(()=>{
 
-    axios.get(`https://de5d-2401-4900-614c-9582-a57e-2b57-cd43-5d93.ngrok-free.app/${busid}`).then((response)=>
+
+    axios.get(`https://social-choice-catfish.ngrok-free.app/getbusdetailseve/${busid}`).then((response)=>
     {
       // setAllstops(response.data)
       // setAllstops(response.data.data)
       const data=response.data.data.stops 
       const times=response.data.time
+      const dists=response.data.distances
       setTime(times)
+      setDist(dists)
       console.log(data)
       data.forEach((element) => {
         setStops((prev)=>[...prev,element.name])
@@ -31,9 +85,82 @@ const index = (navigation) => {
   
   
   }).catch((err)=>console.log(err))
-  ws= new WebSocket("ws://social-choice-catfish.ngrok-free.app/ws")
-  ws.onopen= ()=> ws.send("Connected to React")
+  
   },[])
+
+  useEffect(()=>{
+    console.log(inputRef.current)
+    inputRef.current.scrollBottom=50
+    ws= new WebSocket("ws://social-choice-catfish.ngrok-free.app/ws")
+    ws.onopen=()=> {
+    ws.send("Connected to React")
+    ws.send("Message 2")
+    }
+    ws.onmessage=(e)=>{
+      console.log("Message",e.data)
+      // if(JSON.parse(e.data)){
+      //   console.log("Parsed")
+      // }
+      // else{
+      //   console.log('Not parsed')
+      // }
+      try{
+        const temp=JSON.parse(e.data)
+        if(temp.Place){
+          setDriverLoc(temp.Place)
+          setDriverData(temp)
+        }
+        else{
+          setDriverData(temp)
+        }
+        
+        // const lat=parseInt(temp.Latitude)
+        // const lon=parseInt(temp.Longitude)
+        // getPlaceName(lat,lon)
+
+      }
+      catch{
+        console.log(e.data)
+      }
+      }
+  
+  // const interval=setInterval( async ()=>{
+  //   ws.onmessage=(e)=>{
+  //   console.log(e.data)
+  //   // setDriverData(e.data)
+  //   }
+  // },2500)
+  // return () => clearInterval(interval);
+  
+  },[])
+
+  useEffect(()=>{
+    if(speed!==40 && data){
+      data.map((e,index)=>{
+        if(index>0){
+          const d=dist[index-1]
+          const factor=d/speed
+
+        const t=e.time
+        var timeParts = t.split(":");
+        var hours = parseInt(timeParts[0]);
+        var minutes = parseInt(timeParts[1]);
+        var dateObj = new Date();
+        dateObj.setHours(hours);
+        dateObj.setMinutes(minutes);
+        var millisecondsToAdd = factor * 60 * 1000; 
+
+        dateObj.setTime(dateObj.getTime() + millisecondsToAdd);
+        var newHours = dateObj.getHours();
+        var newMinutes = dateObj.getMinutes();
+        var newTimeString = (newHours < 10 ? '0' : '') + newHours + ':' + (newMinutes < 10 ? '0' : '') + newMinutes;
+        return (
+          data.delay=newTimeString
+        )
+      }
+      })
+    }
+  },[speed])
   const initial="03:30"
   var place = "";
   var time;
@@ -47,10 +174,6 @@ const index = (navigation) => {
     { time: times[3], title: stops[3], delay: "03:48" }, // No delay
     { time: times[4], title: stops[4], delay: "03:52" }, // No delay
   ];
-  const handleclick=()=>{
-    ws.send("Hi from Native")
-  }
-  
   return (
     <>
       <View
@@ -58,7 +181,7 @@ const index = (navigation) => {
           flexDirection: "row",
           alignItems: "center",
           gap: 8,
-          backgroundColor: "#BFEE90",
+          backgroundColor: "#7AAFB3",
           justifyContent: "center",
           height: 90,
           borderBottomEndRadius: 30,
@@ -85,7 +208,15 @@ const index = (navigation) => {
           <Text style={{ color: "red", textAlign: "center" }}>
             will be arriving at 
           </Text>
-          <TouchableOpacity onPress={handleclick}><Text></Text></TouchableOpacity>
+          <View>
+            <Text>Driver Details</Text>
+            <Text>
+              {driverData?`Latitude: ${driverData.Latitude} , Longitude : ${driverData.Longitude}`:`Not available`}
+              </Text>
+            <Text>
+              {driverLoc?`${driverLoc}`:'Not determinable'}
+            </Text>
+          </View>
         </View>
       </View>
       <View
@@ -113,18 +244,22 @@ const index = (navigation) => {
         <Text style={{ color: "red" }}>Bus No {busid}</Text>
       </View>
 
-      <View style={styles.container}>
+      <View style={styles.container} className="relativ h-auto">
         <View style={styles.busPointer}>
-        <FontAwesome5 name="bus-alt" size={20} color="#4169E1" />
+        <FontAwesome5 name="bus-alt" size={20} color="black"/>
         </View>
         <Timeline
+        ref={inputRef}
+        timeStyle={{textAlign: 'center', backgroundColor:'#006268', color:'white', padding:7, borderRadius:13}}
           data={data}
-          circleSize={8}
-          circleColor="#343434"
+          circleSize={23}
+          circleColor="#FF9292"
+          innerCircle={'dot'}
           lineColor="black"
           titleStyle={styles.title}
-          timeContainerStyle={styles.time}
+          timeContainerStyle={{...styles.time,maxHeight: 300}}
           descriptionStyle={styles.description}
+          className="h-full"
           renderDetail={(rowData, sectionID, rowID) => (
             <View style={styles.detailContainer}>
               <Text style={styles.title}>{rowData.title}</Text>
@@ -132,6 +267,19 @@ const index = (navigation) => {
             </View>
           )}
         />
+      </View>
+      <View className="flex flex-col my-3">
+      <Text className="mx-auto">Get on Map</Text>
+      <Link  href={{pathname:"../Map"}} className="mx-auto"
+        contentFit="cover">
+      <Image
+        contentFit="cover"
+        source={require("../../../assets/maps 2.png")}
+        onPress={()=>{
+          router.replace('(pages)/Map')
+        }}
+      />
+      </Link>
       </View>
       {/* <Map/> */}
     </>
@@ -141,30 +289,58 @@ const index = (navigation) => {
 export default index;
 
 const styles = StyleSheet.create({
+  fadeAnimation: {
+    opacity: 0.6, // Set the initial opacity to 0.6
+  },
   container: {
     marginLeft: 100,
     flex: 1,
-    marginTop: 10,
+    marginTop: 6,
+    maxHeight:370
   },
   busPointer: {
     position: "absolute",
-    top: -4,
-    left: 55,
+    top: -6,
+    left: 59,
+    zIndex:1
   },
   time:{
-    fontsize:10,
+    fontsize:15,
     top:-4
   },
   title: {
     marginTop: -15,
-    fontSize: 15,
+    fontSize: 20,
     color: "black",
     marginBottom: 70,
   },
   description: {
+    paddingTop:5,
     color: "red",
    left: -75,
     top:-70,
-    fontSize:12
+    fontSize:15
   },
+  getOnMap: {
+    top: 644,
+    left: 9,
+    color: "#00535f",
+    width: 189,
+    height: 21,
+  },
+  busNo1Typo: {
+    textAlign: "center",
+
+    fontWeight: "700",
+    fontSize: 12,
+    position: "absolute",
+  },
+  maps2Icon: {
+    top: 685,
+    left: 64,
+    width: 247,
+    height: 150,
+    position: "absolute",
+  },
+
 });

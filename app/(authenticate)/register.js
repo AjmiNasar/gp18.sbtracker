@@ -56,7 +56,6 @@ export default function register(){
       <View style={styles.form}>
 
         <Text style= {styles.label}>register</Text>
-
         <TextInput style= {styles.input} placeholder='School' value={username} onChangeText={setUsername}/>
 
         {

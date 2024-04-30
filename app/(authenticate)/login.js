@@ -6,7 +6,8 @@ import axios from 'axios'
 export default function App() {
     const [userdata,setuserdata]=useState([])
     useEffect(()=>{
-      axios.get("https://de5d-2401-4900-614c-9582-a57e-2b57-cd43-5d93.ngrok-free.app/userdata").then((response)=>
+
+      axios.get("https://social-choice-catfish.ngrok-free.app/userdata").then((response)=>
       {
         const data=response.data.data 
         console.log(data)
