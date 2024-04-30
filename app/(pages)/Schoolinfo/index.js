@@ -8,7 +8,7 @@ import {
   } from "react-native";
   import React,{useEffect,useState} from "react";
   import { AntDesign, FontAwesome5 } from "@expo/vector-icons";
-  import { Link, useRouter } from "expo-router";
+  import { useRouter } from "expo-router";
   import axios from 'axios';
   
   const index = () => {
@@ -83,7 +83,7 @@ import {
               <Pressable style={{ height: 50, color: "white" }}
               >
   
-                <Link style={{ top:0, fontWeight:"600", fontSize: 25, textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:0}}}>Bus No 1</Link>
+                <View style={{ top:0, fontWeight:"600", fontSize: 25, textAlign: "left",marginLeft:30 }}><Text style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left" }}>Bus No 1</Text></View>
                 <Text style={{ fontSize: 12, fontWeight: "400", color: "red",textAlign:'left',marginTop:5,marginLeft:30  }}>
                 Peringaavu - Nelikunnu
                 </Text>
@@ -116,7 +116,7 @@ import {
             >
               <Pressable style={{ height: 50, color: "white" }}>
   
-                <Link style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:1}}}>Bus No 2</Link>
+                <View style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left",marginLeft:30 }}><Text style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left" }}>Bus No 2</Text></View>
                 <Text style={{ fontSize: 12, fontWeight: "400", color: "red",textAlign:'left',marginTop:5,marginLeft:30  }}>
                 Peringaavu - Nelikunnu
                 </Text>
@@ -149,7 +149,7 @@ import {
             >
               <Pressable style={{ height: 50, color: "white" }}>
   
-                <Link style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:2}}}>Bus No 3</Link>
+                <View style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left",marginLeft:30 }}><Text style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left" }}>Bus No 3</Text></View>
                 <Text style={{ fontSize: 12, fontWeight: "400", color: "red",textAlign:'left',marginTop:5,marginLeft:30  }}>
                 Viyyur - Athani
                 </Text>
@@ -183,7 +183,7 @@ import {
             >
               <Pressable style={{ height: 50, color: "white" }}>
   
-                <Link style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:3}}}>Bus No 4</Link>
+                <View style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left",marginLeft:30 }}><Text style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left" }}>Bus No 4</Text></View>
                 <Text style={{ fontSize: 12, fontWeight: "400", color: "red",textAlign:'left',marginTop:5,marginLeft:30  }}>
                 Veliyannur - Vallachira
                 </Text>
@@ -217,7 +217,7 @@ import {
           >
             <Pressable style={{ height: 50, color: "white" }}>
   
-              <Link style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left",marginLeft:30 }} href={{pathname:"../(pages)/Businfo",params:{data:[...stops],id:4}}}>Bus No 5</Link>
+              <View style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left",marginLeft:30 }}><Text style={{ top:0, fontSize: 25,fontWeight:"600", textAlign: "left" }}>Bus No 5</Text></View>
               <Text style={{ fontSize: 12, fontWeight: "400", color: "red",textAlign:'left',marginTop:5,marginLeft:30  }}>
                 Mannuthy- Pattikad
                 </Text>
