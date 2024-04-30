@@ -15,7 +15,6 @@ const index = () => {
     ws.onopen=()=>{
     ws.send("From Driver")
   }
-    // Request permission to access location in foreground and background
     const requestLocationPermission = async () => {
       let foregroundStatus = await Location.requestForegroundPermissionsAsync();
       let backgroundStatus = await Location.requestBackgroundPermissionsAsync();
@@ -25,16 +24,11 @@ const index = () => {
         setIsSwitchOn(false)
         return;
       }
-      
 
-      // Start the timer to get current position periodically
-      const timerId = setInterval(getCurrentPosition, 2000); // Runs every 5 seconds
-
-      // Cleanup function to clear the interval when component unmounts
+      const timerId = setInterval(getCurrentPosition, 2000); 
       return () => clearInterval(timerId);
     };
 
-    // Function to get current position
     const getCurrentPosition = async () => {
       try {
         let location = await Location.getCurrentPositionAsync({});
@@ -45,8 +39,6 @@ const index = () => {
         setErrorMsg(error.message);
       }
     };
-
-    // Call the function to request location permission
     requestLocationPermission();
   }, []);
   useEffect(()=>{
@@ -85,7 +77,7 @@ const index = () => {
           <Text>
             Longitude: {location.coords.longitude}
           </Text>
-          <Text>Speed: {location.coords.speed ? location.coords.speed.toFixed(2) : 'Not Available'} m/s</Text>
+          <Text>Speed: {location.coords.speed ? location.coords.speed.toFixed(2)*18/5 : 'Not Available'} m/s</Text>
         </View>
       </View>
       ) : (
