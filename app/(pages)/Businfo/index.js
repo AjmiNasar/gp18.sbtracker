@@ -1,5 +1,5 @@
 import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState,useRef } from "react";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -12,12 +12,35 @@ import axios from 'axios';
 const index = (navigation) => {
   const [stops,setStops]=useState([])
   const [times,setTime]=useState([])
+  const [driverData,setDriverData]=useState(null)
+  const [driverLoc,setDriverLoc]=useState(null)
   const params=useLocalSearchParams()
   const busid=parseInt(params.id)+1
+  const inputRef=useRef(0)
+
+//   async function getPlaceName(lat, lon) {
+//     const apiUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`;
+
+//     try {
+//         const response = await axios.get(apiUrl);
+//         const data = response.data;
+        
+//         if (data.display_name) {
+//             const placeName = data;
+//             console.log('Place Name:', placeName);
+//             setDriverLoc(placeName)
+//         } else {
+//             console.log('No results found');
+//         }
+//     } catch (error) {
+//         console.error('Error:', error.message);
+//     }
+// }
+
 
   useEffect(()=>{
 
-    axios.get(`https://ba70-2405-201-f01f-d807-78aa-9a58-439f-3dba.ngrok-free.app/getbusdetailseve/${busid}`).then((response)=>
+    axios.get(`https://social-choice-catfish.ngrok-free.app/getbusdetailseve/${busid}`).then((response)=>
     {
       // setAllstops(response.data)
       // setAllstops(response.data.data)
@@ -31,8 +54,52 @@ const index = (navigation) => {
   
   
   }).catch((err)=>console.log(err))
-  ws= new WebSocket("ws://social-choice-catfish.ngrok-free.app/ws")
-  ws.onopen= ()=> ws.send("Connected to React")
+  
+  },[])
+
+  useEffect(()=>{
+    console.log(inputRef.current)
+    inputRef.current.scrollBottom=50
+    ws= new WebSocket("ws://social-choice-catfish.ngrok-free.app/ws")
+    ws.onopen=()=> {
+    ws.send("Connected to React")
+    ws.send("Message 2")
+    }
+    ws.onmessage=(e)=>{
+      console.log("Message",e.data)
+      // if(JSON.parse(e.data)){
+      //   console.log("Parsed")
+      // }
+      // else{
+      //   console.log('Not parsed')
+      // }
+      try{
+        const temp=JSON.parse(e.data)
+        if(temp.Place){
+          setDriverLoc(temp.Place)
+        }
+        else{
+          setDriverData(temp)
+        }
+        
+        // const lat=parseInt(temp.Latitude)
+        // const lon=parseInt(temp.Longitude)
+        // getPlaceName(lat,lon)
+
+      }
+      catch{
+        console.log(e.data)
+      }
+      }
+  
+  // const interval=setInterval( async ()=>{
+  //   ws.onmessage=(e)=>{
+  //   console.log(e.data)
+  //   // setDriverData(e.data)
+  //   }
+  // },2500)
+  // return () => clearInterval(interval);
+  
   },[])
   const initial="03:30"
   var place = "";
@@ -47,9 +114,7 @@ const index = (navigation) => {
     { time: times[3], title: stops[3], delay: "03:48" }, // No delay
     { time: times[4], title: stops[4], delay: "03:52" }, // No delay
   ];
-  const handleclick=()=>{
-    ws.send("Hi from Native")
-  }
+
 
 
   return (
@@ -86,7 +151,15 @@ const index = (navigation) => {
           <Text style={{ color: "red", textAlign: "center" }}>
             will be arriving at {time}
           </Text>
-          <TouchableOpacity onPress={handleclick}><Text></Text></TouchableOpacity>
+          <View>
+            <Text>Driver Details</Text>
+            <Text>
+              {driverData?`Latitude: ${driverData.Latitude} , Longitude : ${driverData.Longitude}`:`Not available`}
+              </Text>
+            <Text>
+              {driverLoc?`${driverLoc}`:'Not determinable'}
+            </Text>
+          </View>
         </View>
       </View>
       <View
@@ -114,11 +187,12 @@ const index = (navigation) => {
         <Text style={{ color: "red" }}>Bus No {busid}</Text>
       </View>
 
-      <View style={styles.container}>
+      <View style={styles.container} className="relativ h-auto">
         <View style={styles.busPointer}>
-        <FontAwesome5 name="bus-alt" size={20} color="#4169E1" />
+        <FontAwesome5 name="bus-alt" size={20} color="#4169E1"/>
         </View>
         <Timeline
+        ref={inputRef}
           data={data}
           circleSize={8}
           circleColor="#343434"
@@ -126,6 +200,7 @@ const index = (navigation) => {
           titleStyle={styles.title}
           timeContainerStyle={styles.time}
           descriptionStyle={styles.description}
+          className="h-full"
           renderDetail={(rowData, sectionID, rowID) => (
             <View style={styles.detailContainer}>
               <Text style={styles.title}>{rowData.title}</Text>
@@ -150,7 +225,7 @@ const styles = StyleSheet.create({
   },
   busPointer: {
     position: "absolute",
-    top: -4,
+    top: -8,
     left: 55,
   },
   time:{

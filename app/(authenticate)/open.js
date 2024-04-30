@@ -11,12 +11,17 @@ import {
   } from "react-native";
 import React from 'react';
 import { useRouter } from "expo-router";
+import {PaperProvider, Switch} from 'react-native-paper'
 
 
 
 const open = () => {
   const router = useRouter();
+  const [isSwitchOn, setIsSwitchOn] = React.useState(false);
+
+  const onToggleSwitch = () => setIsSwitchOn(!isSwitchOn);
   return (
+    <PaperProvider>
     <SafeAreaView
       style={{ flex: 1, backgroundColor: "white", alignItems: "center" }}
     >
@@ -61,6 +66,9 @@ const open = () => {
               Driver
             </Text>
           </Pressable>
+          
+
+
         
           </View>
           <View style={{ alignItems: "center", marginTop: 15 }}>
@@ -71,6 +79,7 @@ const open = () => {
 
       </KeyboardAvoidingView>
     </SafeAreaView>
+    </PaperProvider>
   )
 }
 
