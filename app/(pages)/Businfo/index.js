@@ -7,15 +7,37 @@ import Timeline from "react-native-timeline-flatlist";
 import {Link, useNavigation} from 'expo-router'
 import { useLocalSearchParams, useRouteInfo, useRouter } from "expo-router/build/hooks";
 import axios from 'axios';
+import { getPlaceName } from "../../utils/loc";
 
 
 const index = (navigation) => {
   const [stops,setStops]=useState([])
   const [times,setTime]=useState([])
   const [driverData,setDriverData]=useState(null)
+  const [driverLoc,setDriverLoc]=useState(null)
   const params=useLocalSearchParams()
   const busid=parseInt(params.id)+1
   const inputRef=useRef(0)
+
+//   async function getPlaceName(lat, lon) {
+//     const apiUrl = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`;
+
+//     try {
+//         const response = await axios.get(apiUrl);
+//         const data = response.data;
+        
+//         if (data.display_name) {
+//             const placeName = data;
+//             console.log('Place Name:', placeName);
+//             setDriverLoc(placeName)
+//         } else {
+//             console.log('No results found');
+//         }
+//     } catch (error) {
+//         console.error('Error:', error.message);
+//     }
+// }
+
 
   useEffect(()=>{
 
@@ -46,13 +68,29 @@ const index = (navigation) => {
     }
     ws.onmessage=(e)=>{
       console.log("Message",e.data)
-      if(JSON.parse(e.data)){
-        console.log("Parsed")
+      // if(JSON.parse(e.data)){
+      //   console.log("Parsed")
+      // }
+      // else{
+      //   console.log('Not parsed')
+      // }
+      try{
+        const temp=JSON.parse(e.data)
+        if(temp.Place){
+          setDriverLoc(temp.Place)
+        }
+        else{
+          setDriverData(temp)
+        }
+        
+        // const lat=parseInt(temp.Latitude)
+        // const lon=parseInt(temp.Longitude)
+        // getPlaceName(lat,lon)
+
       }
-      else{
-        console.log('Not parsed')
+      catch{
+        console.log(e.data)
       }
-      // setDriverData(e.data)
       }
   
   // const interval=setInterval( async ()=>{
@@ -114,6 +152,15 @@ const index = (navigation) => {
           <Text style={{ color: "red", textAlign: "center" }}>
             will be arriving at {time}
           </Text>
+          <View>
+            <Text>Driver Details</Text>
+            <Text>
+              {driverData?`Latitude: ${driverData.Latitude} , Longitude : ${driverData.Longitude}`:`Not available`}
+              </Text>
+            <Text>
+              {driverLoc?`${driverLoc}`:'Not determinable'}
+            </Text>
+          </View>
         </View>
       </View>
       <View
