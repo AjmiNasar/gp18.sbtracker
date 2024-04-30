@@ -52,6 +52,12 @@ const index = () => {
   useEffect(()=>{
     if(location){
       const driverData={'Latitude':location.coords.latitude,'Longitude':location.coords.longitude}
+      if(location.coords.speed){
+        driverData.Speed=(location.coords.speed.toFixed(2))*18/5
+      }
+      else{
+        driverData.Speed=40
+      }
       ws.send(JSON.stringify(driverData))
     }
     // ws.onmessage=(e)=>{
