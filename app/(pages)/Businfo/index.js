@@ -17,7 +17,7 @@ const index = (navigation) => {
 
   useEffect(()=>{
 
-    axios.get(`https://5ced-2401-4900-615c-9551-8887-d97-3ffb-bada.ngrok-free.app/${busid}`).then((response)=>
+    axios.get(`https://de5d-2401-4900-614c-9582-a57e-2b57-cd43-5d93.ngrok-free.app/${busid}`).then((response)=>
     {
       // setAllstops(response.data)
       // setAllstops(response.data.data)
