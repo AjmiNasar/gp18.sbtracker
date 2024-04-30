@@ -4,16 +4,11 @@ import { useRouter } from "expo-router";
 
 export default function register(){
   const [userdata,setuserdata]=useState([])
-  
-
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
 
   const [username, setUsername ] = useState("")
-
-
-
   const [Password, setPassword ] = useState("")
   const [schoolid, setSchoolid ] = useState("")
   const [errors, setErrors ] = useState({})
@@ -61,7 +56,6 @@ export default function register(){
       <View style={styles.form}>
 
         <Text style= {styles.label}>register</Text>
-       
         <TextInput style= {styles.input} placeholder='School' value={username} onChangeText={setUsername}/>
 
         {

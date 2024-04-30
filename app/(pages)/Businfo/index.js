@@ -1,3 +1,4 @@
+
 import { Pressable, ScrollView, StyleSheet, Text, TouchableOpacity, View,Image } from "react-native";
 import React, { useEffect, useState,useRef } from "react";
 import { Entypo } from "@expo/vector-icons";
@@ -66,6 +67,7 @@ const index = (navigation) => {
 
 
   useEffect(()=>{
+
 
     axios.get(`https://social-choice-catfish.ngrok-free.app/getbusdetailseve/${busid}`).then((response)=>
     {
@@ -172,9 +174,6 @@ const index = (navigation) => {
     { time: times[3], title: stops[3], delay: "03:48" }, // No delay
     { time: times[4], title: stops[4], delay: "03:52" }, // No delay
   ];
-
-
-
   return (
     <>
       <View
@@ -207,7 +206,7 @@ const index = (navigation) => {
             Your ward has reached {place}
           </Text>
           <Text style={{ color: "red", textAlign: "center" }}>
-            will be arriving at {time}
+            will be arriving at 
           </Text>
           <View>
             <Text>Driver Details</Text>
@@ -264,7 +263,6 @@ const index = (navigation) => {
           renderDetail={(rowData, sectionID, rowID) => (
             <View style={styles.detailContainer}>
               <Text style={styles.title}>{rowData.title}</Text>
-
               <Text style={styles.description}>{rowData.delay}</Text>
             </View>
           )}

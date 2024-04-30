@@ -15,8 +15,6 @@ import {
     const router = useRouter();
     const [stops,setStops]=useState([])
     const [busData,setbusData]=useState([]);
-   
-
     return (
       <>
         <View
@@ -53,8 +51,9 @@ import {
        
         <View style={styles.container}>
         <AntDesign name="pluscircle" size={24} color="black" style={styles.icon} />
-        <Text style={styles.text}>Add buses</Text>
-    </View>
+        <Text style={styles.text} onPress={()=>{router.replace('/(pages)/AddBus');}}>Add buses</Text>
+        </View>
+
         <ScrollView style={{ flex: 1}}>
           <View style={{ padding:10 }}>
           {/* <View style={{top:0,left:30,backgroundColor:"#e0e0e0",height:30,width:160}}>
@@ -241,10 +240,10 @@ import {
       alignItems: 'center',
       marginLeft:30,
       marginTop:20,
-      backgroundColor: '#FFD6D6', // Background color for the container
+      backgroundColor: '#F3EDED', // Background color for the container
       borderRadius: 120, // Border radius to create rounded corners
       padding: 10,
-      width:180,
+      width:150,
       height:45
     },
     icon: {
