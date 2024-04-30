@@ -7,7 +7,7 @@ import {
   TextInput,
 } from "react-native";
 import { Fontisto } from "@expo/vector-icons";
-import React,{useEffect,useState} from "react";
+import React,{useEffect,useState,useContext} from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -16,11 +16,13 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
 import { Redirect } from "expo-router";
 import axios from 'axios';
+import { AuthContext } from "../../(authenticate)/context/AuthContext";
 
 const index = () => {
   const router = useRouter();
   const [stops,setStops]=useState([])
   const [busData,setbusData]=useState([]);
+  const {logout} = useContext(AuthContext);
   useEffect(()=>{
     axios.get("https://ba70-2405-201-f01f-d807-78aa-9a58-439f-3dba.ngrok-free.app/getbusdetailseve").then((response)=>
     {setbusData(response.data)
@@ -75,7 +77,8 @@ const index = () => {
           Where is my
         </Text>
         <Text style={{ color: "#F98B88", fontSize: 20 }}>School Bus</Text> */}
-        <Text style={{color: "gray", fontSize: 16, marginRight:12}} onPress={()=>router.replace("/(authenticate)/open")}>Logout</Text>
+        {/* <Text style={{color: "gray", fontSize: 16, marginRight:12}} onPress={()=>router.replace("/(authenticate)/open")}>Logout</Text> */}
+        <Text style={{color: "gray", fontSize: 16, marginRight:12}} onPress={()=>logout()}>Logout</Text>
       </View>
      
 

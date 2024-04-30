@@ -1,39 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useContext } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TextInput, Button, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Pressable } from 'react-native';
 import { useRouter } from "expo-router";
+import {AuthContext} from './context/AuthContext';
 import axios from 'axios'
+import Spinner from 'react-native-loading-spinner-overlay';
 export default function App() {
-    const [userdata,setuserdata]=useState([])
-    useEffect(()=>{
-      axios.get("https://ba70-2405-201-f01f-d807-78aa-9a58-439f-3dba.ngrok-free.app/userdata").then((response)=>
-      {
-        const data=response.data.data 
-        console.log(data)
-        setuserdata(data)
-    
-    }).catch((err)=>console.log(err))
-    },[])
-
-    const dismissKeyboard = () => {
+  const [username, setUsername ] = useState("")
+  const [Password, setPassword ] = useState("")
+  const [schoolid, setSchoolid ] = useState("")
+  const {isLoading, login} = useContext(AuthContext);
+   
+  const dismissKeyboard = () => {
       Keyboard.dismiss();
-    };
+    }
 
-    const [username, setUsername ] = useState("")
-
- 
-
-    const [Password, setPassword ] = useState("")
-    const [schoolid, setSchoolid ] = useState("")
+    
     const [errors, setErrors ] = useState({})
-    const router = useRouter();
+   
 
     const validateForm = ()=>{
       let errors= {};
 
       if(!username) errors.username = "username is required";
       if(!Password) errors.Password = "password is required";
-      if(!schoolid) errors.schoolid = "school-id is required";
+      if(!schoolid) errors.schoolid = "School-id is required";
 
       setErrors(errors);
 
@@ -43,23 +34,13 @@ export default function App() {
 
     const handleSubmit = ()=>{
       if (validateForm()) {
-        console.log("Submitted", username, Password, schoolid);
-        userdata.forEach((element)=>{
-          if(element.username===username && element.password===Password){
-            setUsername("");
-            setPassword("");
-            setSchoolid("");
-            setErrors({});
-       
-            router.replace("/(tabs)/Home");
-          }
-        })
+         login(username,Password,schoolid);
+        // console.log("Submitted", username, Password, schoolid);
         setUsername("");
-            setPassword("");
-            setSchoolid("");
-            setErrors({});
-        
-        
+        setPassword("");
+        setSchoolid("");
+        setErrors({});
+      
       }
     }
 
@@ -68,6 +49,7 @@ export default function App() {
     <KeyboardAvoidingView behavior= "padding" style={styles.container}>
     
       <View style={styles.form}>
+      <Spinner visible={isLoading} />
 
         <Text style= {styles.label}>login</Text>
        
@@ -88,6 +70,7 @@ export default function App() {
         {
           errors.schoolid ? <Text style= {styles.errorText}>{errors.schoolid}</Text> : null
         }
+        
 
         <Button title='Submit' onPress= {handleSubmit}  color="#F98B88" />
      </View>

@@ -1,3 +1,6 @@
 {
-  "urlRandomness": "agM1fPs"
+  "urlRandomness": "agM1fPs",
+  "dev": true,
+  "minify": false,
+  "https": false
 }
