@@ -7,7 +7,6 @@ import Timeline from "react-native-timeline-flatlist";
 import {Link, useNavigation} from 'expo-router'
 import { useLocalSearchParams, useRouteInfo, useRouter } from "expo-router/build/hooks";
 import axios from 'axios';
-import { getPlaceName } from "../../utils/loc";
 
 
 const index = (navigation) => {
